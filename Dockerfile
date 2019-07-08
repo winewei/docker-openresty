@@ -55,3 +55,4 @@ RUN set -eux; \
 
 
 EXPOSE 80
+CMD ["openresty", "-g", "daemon off;"]
