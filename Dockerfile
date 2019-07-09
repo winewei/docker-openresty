@@ -28,6 +28,7 @@ RUN apt-get update \
 FROM debian:stretch-slim
 
 COPY --from=install /usr/local/openresty /usr/local/openresty
+COPY nginx.conf /usr/local/openresty/nginx/conf/
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -41,7 +42,9 @@ RUN apt-get update \
                make \
                unzip \
                libc-dev \
-               wget
+               wget \
+    && mkdir -p /usr/local/openresty/nginx/conf/vhosts \
+    && useradd -M www -s /usr/sbin/nologin
 ENV PATH="$PATH:/usr/local/openresty/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/luajit/bin"
 
 RUN set -eux; \
